@@ -3,7 +3,7 @@ User.delete_all
 Gossip.delete_all
 JoinTableGossipsTag.delete_all
 Tag.delete_all
-
+PrivateMessage.delete_all
 
 
 ############################################
@@ -14,6 +14,7 @@ nb_user = 10
 nb_gossip = 20
 nb_tag = 10
 nb_jointablegossipstag = 60
+nb_privatemessage = 60
 
 
 ###########################################
@@ -44,7 +45,7 @@ puts "#{nb_user} users created!"
 
 
 ############################################
-# GOSSIP
+# GOSSIPS
 
 nb_gossip.times do |i|
   user = User.all.shuffle.last
@@ -83,6 +84,21 @@ nb_jointablegossipstag.times do |i|
 end
 
 puts "#{nb_jointablegossipstag} jointable entries created!"
+
+###########################################
+# PRIVATE_MESSAGES
+
+nb_privatemessage.times do |i|
+  recipient = User.all.shuffle.last
+  sender = User.all.shuffle.last
+  PrivateMessage.create!(
+    content: Faker::Hipster.paragraph(sentence_count: 1, supplemental: true, random_sentences_to_add: 5),
+    recipient_id: recipient.id,
+    sender_id: sender.id,
+  )
+end
+
+puts "#{nb_privatemessage} private messages sent!"
 
 ############################################
 
